@@ -82,7 +82,6 @@ select:disabled { opacity: 0.35; cursor: not-allowed; }
   font-size: 9.5px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 1px; color: var(--text-tertiary);
   text-align: right; white-space: nowrap;
-  position: sticky; top: 52px; z-index: 10;
 }
 .data-table th:first-child { text-align: left; }
 .data-table td {
@@ -122,7 +121,7 @@ select:disabled { opacity: 0.35; cursor: not-allowed; }
   font-size: 9px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.8px; color: var(--text-tertiary);
   text-align: center; white-space: nowrap;
-  position: sticky; top: 52px; z-index: 10; border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .aw-table th.opt-col { text-align: left; min-width: 160px; position: sticky; left: 0; z-index: 20; background: var(--elevated); }
 .aw-table th.qtr-header {
@@ -360,7 +359,7 @@ function renderSummary(datasets) {
         <div class="sc-sub">${ds.cw_id} · ${ds.weeks[wi]}</div>
       </div>
       <div class="summary-card" style="border-left-color:#48484a">
-        <div class="sc-label">${ds.program} · Prev Week</div>
+        <div class="sc-label">${ds.program} · Last Week</div>
         <div class="sc-value" style="color:var(--text-secondary)">${fmt(pw)}</div>
         <div class="sc-sub">${ds.pw_id}</div>
       </div>
@@ -380,7 +379,7 @@ function renderSingleWeek(datasets) {
 
   let hRow = '<tr><th>Option</th>';
   programs.forEach(p => {
-    hRow += `<th>${p} CW Units</th><th>${p} PW Units</th><th>${p} WoW Δ</th><th>${p} Mix%</th><th>${p} Mix Δ</th>`;
+    hRow += `<th>${p} CW Units</th><th>${p} LW Units</th><th>${p} WoW Δ</th><th>${p} Mix%</th><th>${p} Mix Δ</th>`;
   });
   hRow += '</tr>';
   document.getElementById('tableHead').innerHTML = hRow;
@@ -402,8 +401,7 @@ function renderSingleWeek(datasets) {
       const barW = mix ? Math.max(2, Math.round(mix*1.2)) : 0;
       row += `
         <td>${fmt(opt?.cw[wi])}</td>
-        <td style="color:var(--text-secondary)">${fmt(opt?.pw[wi])}</td>
-        <td>${wowPill(opt?.wow[wi])}</td>
+        <td style="color:var(--text-secondary)">${fmt(opt?.pw[wi])}</td>        <td>${wowPill(opt?.wow[wi])}</td>
         <td><div class="mix-bar-wrap"><div class="mix-bar" style="width:${barW}px"></div>${fmtMix(mix)}</div></td>
         <td>${opt?.mix_delta[wi]!=null ? '<span class="wow-pill '+(opt.mix_delta[wi]>0?'pos':opt.mix_delta[wi]<0?'neg':'zero')+'">'+fmtSign(opt.mix_delta[wi],true)+'</span>' : '—'}</td>`;
     });
