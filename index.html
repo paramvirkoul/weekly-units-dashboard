@@ -359,9 +359,9 @@ function renderSummary(datasets) {
         <div class="sc-sub">${ds.cw_id} · ${ds.weeks[wi]}</div>
       </div>
       <div class="summary-card" style="border-left-color:#48484a">
-        <div class="sc-label">${ds.program} · Last Week</div>
+        <div class="sc-label">${ds.program} · ${ds.pw_id}</div>
         <div class="sc-value" style="color:var(--text-secondary)">${fmt(pw)}</div>
-        <div class="sc-sub">${ds.pw_id}</div>
+        <div class="sc-sub">Last Week</div>
       </div>
       <div class="summary-card" style="border-left-color:${wow>0?'#30d158':wow<0?'#ff453a':'#48484a'}">
         <div class="sc-label">${ds.program} · WoW Δ</div>
@@ -375,11 +375,13 @@ function renderSummary(datasets) {
 function renderSingleWeek(datasets) {
   const wi       = selWeekIdx;
   const programs = datasets.map(d=>d.program);
+  const cwId = datasets[0].cw_id;
+  const pwId = datasets[0].pw_id;
   const names    = getAllOptionNames(datasets);
 
   let hRow = '<tr><th>Option</th>';
   programs.forEach(p => {
-    hRow += `<th>${p} CW Units</th><th>${p} LW Units</th><th>${p} WoW Δ</th><th>${p} Mix%</th><th>${p} Mix Δ</th>`;
+    hRow += `<th>${p} CW (${cwId})</th><th>${p} LW (${pwId})</th><th>${p} WoW Δ</th><th>${p} Mix%</th><th>${p} Mix Δ</th>`;
   });
   hRow += '</tr>';
   document.getElementById('tableHead').innerHTML = hRow;
